@@ -1,0 +1,166 @@
+================================================================================
+                    DỰ ÁN DỰ ĐOÁN TỪ TIẾP THEO
+                    NEXT WORD PREDICTION SYSTEM
+================================================================================
+
+📋 THÔNG TIN DỰ ÁN
+------------------
+Tên: Hệ thống dự đoán từ tiếp theo cho tiếng Việt
+Mô tả: Xây dựng mô hình dự đoán từ tiếp theo dựa trên văn bản đầu vào
+Dataset: VTSNLP Vietnamese Curated Dataset (10,000 dòng)
+Ngôn ngữ: Python
+Framework: NumPy (tự xây dựng mô hình từ đầu)
+
+📁 CẤU TRÚC DỰ ÁN
+------------------
+nwp/
+├── notebooks/
+│   ├── 01_data_preprocessing.ipynb    # Tiền xử lý dữ liệu
+│   ├── 02_model_training.ipynb        # Huấn luyện mô hình
+│   └── 03_model_testing.ipynb         # Test và sử dụng
+├── data/
+│   ├── raw/                           # Dữ liệu gốc
+│   └── processed/                     # Dữ liệu đã xử lý
+│       ├── vocabulary.pkl
+│       ├── training_data.pkl
+│       ├── tokenized_texts.pkl
+│       └── config.pkl
+├── models/
+│   ├── ngram_model.pkl               # Mô hình N-gram
+│   └── lstm_model.pkl                # Mô hình LSTM
+├── README.md                         # Tài liệu chính
+├── QUICKSTART.md                     # Hướng dẫn nhanh
+└── requirements.txt                  # Dependencies
+
+🔧 CÔNG NGHỆ SỬ DỤNG
+--------------------
+- Python 3.7+
+- NumPy: Xây dựng mô hình LSTM
+- underthesea: Tokenization tiếng Việt
+- datasets: Load VTSNLP dataset
+- Jupyter Notebook: Development environment
+
+🎯 TÍNH NĂNG CHÍNH
+------------------
+1. ✅ Tiền xử lý văn bản tiếng Việt với underthesea
+2. ✅ Xây dựng vocabulary và encoding
+3. ✅ Mô hình N-gram (Trigram) với Laplace smoothing
+4. ✅ Mô hình LSTM tự xây dựng từ NumPy (không dùng framework)
+5. ✅ Training và evaluation
+6. ✅ API predict_next_word() đơn giản
+7. ✅ Lưu và load mô hình
+
+🚀 CÁCH SỬ DỤNG
+---------------
+1. Cài đặt thư viện:
+   pip install -r requirements.txt
+
+2. Chạy notebook 01: Tiền xử lý dữ liệu
+   - Load 10,000 dòng từ VTSNLP
+   - Tokenize và xây dựng vocabulary
+   - Tạo training sequences
+
+3. Chạy notebook 02: Huấn luyện mô hình
+   - Train N-gram model
+   - Train LSTM model
+   - Lưu mô hình
+
+4. Chạy notebook 03: Test mô hình
+   - Load mô hình đã lưu
+   - Sử dụng predict_next_word()
+   - Test với các ví dụ
+
+📝 VÍ DỤ SỬ DỤNG
+-----------------
+Python:
+    input = "tôi đi học bằng "
+    predictions = predict_next_word(input, 3)
+    print(predictions)
+    # Output: ['xe đạp', 'xe buýt', 'đi bộ']
+
+🏗️ CHI TIẾT KỸ THUẬT
+---------------------
+
+1. MÔ HÌNH N-GRAM:
+   - Trigram (n=3)
+   - Laplace smoothing (α=0.01)
+   - Công thức: P(w|context) = (count(context,w) + α) / (count(context) + α*|V|)
+
+2. MÔ HÌNH LSTM:
+   - Embedding: 50 dimensions
+   - Hidden units: 128
+   - Architecture: Embedding → LSTM → Softmax
+   - Gates: Forget, Input, Cell, Output
+   - Training: Cross-entropy loss, Gradient descent
+   - Epochs: 5, Batch size: 128
+
+3. TIỀN XỬ LÝ:
+   - Làm sạch: Loại bỏ URL, email, ký tự đặc biệt
+   - Tokenization: underthesea.word_tokenize()
+   - Vocabulary: Chỉ giữ từ xuất hiện ≥ 2 lần
+   - Padding: Sequences có cùng độ dài (max_len=10)
+
+📊 ĐÁNH GIÁ
+------------
+Metrics:
+- Top-k Accuracy
+- Perplexity
+- Inference Speed
+
+So sánh:
+- N-gram: Nhanh (~1-2ms), tốt cho ngữ cảnh ngắn
+- LSTM: Chậm hơn (~10-20ms), tốt cho ngữ cảnh dài
+
+✨ ĐIỂM NỔI BẬT
+---------------
+1. ✅ Tự xây dựng LSTM từ đầu bằng NumPy
+2. ✅ Không sử dụng sklearn, PyTorch, TensorFlow
+3. ✅ Code rõ ràng, dễ hiểu, có comment đầy đủ
+4. ✅ Chia thành 3 notebook độc lập
+5. ✅ Lưu và load mô hình dễ dàng
+6. ✅ API đơn giản, dễ sử dụng
+7. ✅ Tài liệu đầy đủ (README + QUICKSTART)
+
+📚 TÀI LIỆU
+-----------
+- README.md: Tài liệu chi tiết đầy đủ
+- QUICKSTART.md: Hướng dẫn bắt đầu nhanh
+- Notebooks: Có markdown và comments chi tiết
+
+🔮 PHÁT TRIỂN TIẾP
+------------------
+Có thể mở rộng:
+1. Attention mechanism
+2. BiLSTM
+3. Tăng dataset
+4. API REST
+5. Mobile app integration
+6. Model optimization (quantization, pruning)
+
+💡 LƯU Ý QUAN TRỌNG
+-------------------
+1. Mô hình được xây dựng hoàn toàn từ đầu
+2. LSTM là simplified version (không có full BPTT)
+3. Phù hợp cho mục đích học tập và nghiên cứu
+4. Để production, nên dùng framework chuyên nghiệp
+
+================================================================================
+                        DỰ ÁN HOÀN THÀNH!
+================================================================================
+
+🎯 YÊU CẦU ĐÃ HOÀN THÀNH:
+✅ 3 notebook riêng biệt (preprocessing, training, testing)
+✅ Load 10,000 dòng từ VTSNLP dataset
+✅ Tiền xử lý với underthesea
+✅ Mô hình N-gram tự xây dựng
+✅ Mô hình LSTM tự xây dựng (NumPy, không dùng framework)
+✅ Lưu mô hình dưới dạng .pkl
+✅ Hàm predict_next_word() theo format yêu cầu
+✅ Test và demo với ví dụ cụ thể
+
+📞 HỖ TRỢ:
+- Đọc README.md để hiểu chi tiết
+- Đọc QUICKSTART.md để bắt đầu nhanh
+- Xem code trong notebooks có comment đầy đủ
+
+Chúc bạn thành công! 🎉
